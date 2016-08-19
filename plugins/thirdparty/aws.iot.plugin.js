@@ -244,9 +244,10 @@
                     thingstate_topicpub = aws_get_thing_template.replace("&", thing);
                     thingstate_topic = thingstate_topicpub+"/accepted";
                     console.log("Start subscribe " + thingstate_topic);
-                    client.subscribe(thingstate_topic);
-                    console.log("Start get state of " + thingstate_topicpub);
-                    client.publish(thingstate_topicpub, "{}");
+                    client.subscribe(thingstate_topic,  function() {
+                        console.log("Start get state of " + thingstate_topicpub);
+                        client.publish(thingstate_topicpub, "{}");
+                    });
                 }
             }
         }
