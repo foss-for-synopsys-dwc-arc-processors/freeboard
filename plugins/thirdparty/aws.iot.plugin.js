@@ -612,12 +612,15 @@
      * @method     MQTTClient#subscribe
      * @param      {string}  topic
      */
-    MQTTClient.prototype.subscribe = function(topic) {
+    MQTTClient.prototype.subscribe = function(topic, callback) {
         var self = this;
         try {
             this.client.subscribe(topic, {
                 onSuccess: function() {
                     self.emit('subscribeSucess');
+                    if (_.isFunction(callback)) {
+                        callback();
+                    }
                 },
                 onFailure: function() {
                     self.emit('subscribeFailed');
